@@ -11,17 +11,23 @@ const config = {
   },
   log: {
     appenders: {
-      cheese: { type: "file", filename: "logs/cheese.log" },
+      req: { type: "file", filename: "logs/req.log" },
       db: { type: "file", filename: "logs/db.log" },
+      finalInfo: { type: "file", filename: "logs/finalInfo.log" },
     },
     categories: {
-      default: { appenders: ["cheese"], level: "error" },
+      default: { appenders: ["req"], level: "info" },
       db: { appenders: ["db"], level: "info" },
+      finalInfo: { appenders: ["finalInfo"], level: "info" },
     },
   },
   jwt: {
     jwt_sercret: process.env.JWT_SERCRET,
     jwt_expire: process.env.JWT_EXPIRE,
+    jwt_unless: [
+      '/design',
+      '/design/login'
+    ]
   },
 };
 
