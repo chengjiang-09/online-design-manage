@@ -2,16 +2,18 @@ import dotenv from "dotenv";
 dotenv.config();
 import db from "./db";
 db();
+import redis from "./db/redis";
+redis();
 
 import Koa from "koa";
 import compress from "koa-compress";
 import router from "./routers";
 import KoaBody from "koa-body";
 import Conditional from "koa-conditional-get";
-import Etag from 'koa-etag'
+import Etag from "koa-etag";
 
 import reqLoggerMiddleware from "./middlewares/reqLoggerMiddleware";
-import finalInfoMiddleware from "./middlewares/finalInfoMiddleware";
+// import finalInfoMiddleware from "./middlewares/finalInfoMiddleware";
 import authMiddleware from "./middlewares/authMiddleware";
 
 const app = new Koa();
@@ -36,8 +38,8 @@ app
     })
   )
   .use(authMiddleware)
-  .use(finalInfoMiddleware)
   .use(reqLoggerMiddleware)
+  // .use(finalInfoMiddleware)
   .use(router.routes());
 
 function run(port: any) {

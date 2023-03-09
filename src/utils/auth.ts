@@ -6,7 +6,7 @@ import JWT, {
 } from "jsonwebtoken";
 import config from "../configs/config";
 
-function sign(data: any) {
+export function sign(data: any) {
   return JWT.sign(
     {
       payload: data,
@@ -18,7 +18,7 @@ function sign(data: any) {
   );
 }
 
-function verify(token: string): {
+export function verify(token: string): {
   userData: Jwt | JwtPayload | string | null;
   error: TokenExpiredError | JsonWebTokenError | null;
 } {

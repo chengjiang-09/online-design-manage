@@ -21,8 +21,8 @@ const sequelize = new Sequelize(
       deletedAt: "deleted_at",
     },
     models: [
-      path.join(__dirname, "..", "model/**/*.ts"),
-      path.join(__dirname, "..", "model/**/*.js"),
+      path.join(__dirname, "..", "models/**/*.ts"),
+      path.join(__dirname, "..", "models/**/*.js"),
     ],
   }
 );

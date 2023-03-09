@@ -27,6 +27,7 @@
     "@types/koa-static": "^4.0.2",
     "@types/koa__router": "^12.0.0",
     "@types/node": "*",
+    "@types/nodemailer": "^6.4.7",
     "@types/validator": "^13.7.12",
     "dotenv": "^16.0.3",
     "ioredis": "^5.3.1",
@@ -39,6 +40,7 @@
     "koa-static": "^5.0.0",
     "log4js": "^6.8.0",
     "mysql2": "^3.1.2",
+    "nodemailer": "^6.9.1",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.29.0",
     "sequelize-typescript": "^2.1.5"

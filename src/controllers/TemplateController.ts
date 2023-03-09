@@ -11,4 +11,4 @@ class TemplateController {
   }
 }
 
-export default new TemplateController
+export default new TemplateController();

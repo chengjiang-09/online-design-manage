@@ -1,8 +1,10 @@
 import { Column, Model, Table } from "sequelize-typescript";
 
 //用户表
-@Table
-export default class Chart extends Model {
+@Table({
+    tableName: 'users'
+})
+export default class User extends Model {
     @Column
     user_name!:string
     @Column
@@ -11,4 +13,6 @@ export default class Chart extends Model {
     email!:string
     @Column
     role_id!:number
+    @Column
+    group_id!:string
 }
