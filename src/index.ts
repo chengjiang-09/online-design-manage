@@ -15,10 +15,12 @@ import Etag from "koa-etag";
 import reqLoggerMiddleware from "./middlewares/reqLoggerMiddleware";
 // import finalInfoMiddleware from "./middlewares/finalInfoMiddleware";
 import authMiddleware from "./middlewares/authMiddleware";
+import corsMiddleware from "./middlewares/corsMiddleware";
 
 const app = new Koa();
 
 app
+  .use(corsMiddleware)
   .use(Conditional())
   .use(Etag())
   .use(

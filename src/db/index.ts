@@ -24,6 +24,7 @@ const sequelize = new Sequelize(
       path.join(__dirname, "..", "models/**/*.ts"),
       path.join(__dirname, "..", "models/**/*.js"),
     ],
+    timezone: '+08:00'
   }
 );
 

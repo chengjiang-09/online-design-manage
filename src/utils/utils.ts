@@ -20,7 +20,7 @@ export function getVerifyCode(): string{
  * @param rules 正则校验规则
  * @returns
  */
-export function verifyRegular(value: string, rules: RegExp): boolean {
+export function verifyRegularByRE(value: string, rules: RegExp): boolean {
   let re = new RegExp(rules);
   return re.test(value);
 }

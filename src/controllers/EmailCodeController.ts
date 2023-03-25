@@ -1,30 +1,26 @@
 import { Context } from "koa";
 import config from "../configs/config";
-import { redisSet, redisGet } from "../db/redis";
+import { redisSet } from "../db/redis";
 import { smtpLogger } from "../logger";
 import { sendVerificationCode } from "../utils/emailVerificationCode";
-import { getVerifyCode, verifyRegular } from "../utils/utils";
+import { getVerifyCode, verifyRegularByRE } from "../utils/utils";
+import response from '../utils/response'
 
 class EmailCodeController {
   async sendCode(ctx: Context) {
+    
     const data = ctx.request.query;
 
     let email = data.email as string;
     if (
       email &&
-      verifyRegular(email, config.regExp.email)
+      verifyRegularByRE(email, config.regExp.email)
     ) {
+      
       let code = getVerifyCode();
 
-      const data = await redisGet(
-        `${config.redis.redis_verify_login.key}${email}`
-      );
-
-      if (data) {
-        return;
-      }
-
       try {
+        response.success(ctx, 'success')
         sendVerificationCode(email, code).then(async () => {
           await redisSet(
             `${config.redis.redis_verify_login.key}${email}`,
@@ -33,8 +29,11 @@ class EmailCodeController {
           );
         });
       } catch (err) {
+        response.error(ctx, 'error')
         smtpLogger.info((err as Error).message);
       }
+    }else {
+      response.error(ctx, '邮箱为空或违规')
     }
   }
 }

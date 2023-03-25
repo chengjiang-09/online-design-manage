@@ -4,7 +4,7 @@ import UserServer from "../servers/UserServer";
 import { sign } from "../utils/auth";
 import config from "../configs/config";
 import { redisGet } from "../db/redis";
-import { encryptionMD5, verifyRegular } from "../utils/utils";
+import { encryptionMD5, verifyRegularByRE } from "../utils/utils";
 
 class LoginController {
   async loginByEmail(ctx: Context) {
@@ -13,7 +13,7 @@ class LoginController {
     let email = data.email;
     let code = data.code;
 
-    if (email && verifyRegular(email, config.regExp.email) && code) {
+    if (email && verifyRegularByRE(email, config.regExp.email) && code) {
       const verify_data = await redisGet(
         `${config.redis.redis_verify_login.key}${email}`
       );
@@ -46,7 +46,7 @@ class LoginController {
     let email = data.email;
     let password = data.password;
 
-    if (email && verifyRegular(email, config.regExp.email) && password) {
+    if (email && verifyRegularByRE(email, config.regExp.email) && password) {
       const user = await UserServer.findUserByEmail(email);
 
       if (!user) {
