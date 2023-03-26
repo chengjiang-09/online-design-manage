@@ -2,7 +2,8 @@ import { Column, Model, Table } from "sequelize-typescript";
 
 //模板表
 @Table({
-    tableName: 'charts'
+    tableName: 'charts',
+    modelName: 'Chart'
 })
 export default class Chart extends Model {
     @Column

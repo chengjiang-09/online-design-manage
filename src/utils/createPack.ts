@@ -11,6 +11,13 @@ interface Value {
   [key: string | number | symbol]: any;
 }
 
+/**
+ * 向数据库中插入数据时，对数据进行二次封装，添加一些必要字段
+ * （此处可能会被sequelize默认字段覆盖）
+ * 
+ * @param value 
+ * @returns 
+ */
 function createPack(value: Value): CreateData {
   let nowTime = getDate();
   let createData: CreateData = {

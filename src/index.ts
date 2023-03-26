@@ -11,15 +11,19 @@ import router from "./routers";
 import KoaBody from "koa-body";
 import Conditional from "koa-conditional-get";
 import Etag from "koa-etag";
+import { koaSwagger } from "koa2-swagger-ui";
 
 import reqLoggerMiddleware from "./middlewares/reqLoggerMiddleware";
 // import finalInfoMiddleware from "./middlewares/finalInfoMiddleware";
 import authMiddleware from "./middlewares/authMiddleware";
 import corsMiddleware from "./middlewares/corsMiddleware";
 
+import { swaggerUiConfig } from "./configs/swaggerConfig";
+
 const app = new Koa();
 
 app
+  .use(koaSwagger(swaggerUiConfig))
   .use(corsMiddleware)
   .use(Conditional())
   .use(Etag())

@@ -1,14 +1,12 @@
-import User from "../models/User";
-import createPack from "../utils/createPack";
+import User, { UserCreationAttributes } from "../models/Users";
 
 class UserServer {
   findUserByEmail(email: string) {
     return User.findOne({ where: { email } });
   }
-  createUser(userData: object) {
-    let createObj = createPack(userData)
-    return User.create(createObj)
+  createUser(userData: UserCreationAttributes) {
+    return User.create(userData);
   }
 }
 
-export default new UserServer;
+export default new UserServer();
