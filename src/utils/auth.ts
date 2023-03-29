@@ -24,6 +24,7 @@ export function verify(token: string): {
 } {
   try {
     const userData = JWT.verify(token, config.jwt.jwt_sercret as string);
+    
     return {
       userData: userData,
       error: null,

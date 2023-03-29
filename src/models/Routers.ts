@@ -11,6 +11,8 @@ interface RouterAttributes {
   name?: string;
   path?: string;
   component?: string;
+  icon?:string
+  label?:string
 }
 
 interface RouterCreationAttributes extends Optional<RouterAttributes, "id"> {
@@ -41,4 +43,8 @@ export default class Router extends Model<
   path!: string;
   @Column
   component!: string;
+  @Column
+  icon?:string
+  @Column
+  label?:string
 }
