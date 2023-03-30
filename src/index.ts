@@ -12,6 +12,7 @@ import KoaBody from "koa-body";
 import Conditional from "koa-conditional-get";
 import Etag from "koa-etag";
 import { koaSwagger } from "koa2-swagger-ui";
+import KoaStatic from "koa-static";
 
 import reqLoggerMiddleware from "./middlewares/reqLoggerMiddleware";
 // import finalInfoMiddleware from "./middlewares/finalInfoMiddleware";
@@ -19,12 +20,19 @@ import authMiddleware from "./middlewares/authMiddleware";
 import corsMiddleware from "./middlewares/corsMiddleware";
 
 import { swaggerUiConfig } from "./configs/swaggerConfig";
+import path from "path";
 
 const app = new Koa();
 
 app
-  .use(koaSwagger(swaggerUiConfig))
   .use(corsMiddleware)
+  .use(koaSwagger(swaggerUiConfig))
+  .use(
+    KoaStatic(path.join(path.resolve(__dirname, '..') + "/public"), {
+      maxAge: 60 * 60 * 1000,
+      gzip: true,
+    })
+  )
   .use(Conditional())
   .use(Etag())
   .use(
