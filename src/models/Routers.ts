@@ -47,4 +47,10 @@ export default class Router extends Model<
   icon?:string
   @Column
   label?:string
+  @Column
+  group_id?:string
+  @Column
+  group_name?:string
+  @Column
+  group_icon?:string
 }
