@@ -1,12 +1,23 @@
 import { Model, Table, Column } from "sequelize-typescript";
+import { Optional } from "sequelize";
+
+interface RolesAttributes {
+  id?: number;
+  role_weight?: number;
+  role_name?: string;
+}
+
+interface RolesCreationAttributes extends Optional<RolesAttributes, "id"> {
+    dataValues?: any;
+}
 
 @Table({
-    tableName: 'roles',
-    modelName: 'Role'
+  tableName: "roles",
+  modelName: "Role",
 })
-export default class Role extends Model {
-    @Column
-    role_weight!:number
-    @Column
-    role_name!:string
+export default class Role extends Model<RolesAttributes, RolesCreationAttributes> {
+  @Column
+  role_weight!: number;
+  @Column
+  role_name!: string;
 }

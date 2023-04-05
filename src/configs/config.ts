@@ -37,7 +37,14 @@ const config = {
   jwt: {
     jwt_sercret: process.env.JWT_SERCRET,
     jwt_expire: process.env.JWT_EXPIRE,
-    jwt_unless: ["/design","/design/swagger.json", "/design/login/email", "/design/login/emailCode", ],
+    jwt_unless: [
+      "/design",
+      "/design/swagger.json",
+      "/design/login/email",
+      "/design/login/emailCode",
+      "/design/canvasHeaderMenu",
+      "/design/templateClassification"
+    ],
   },
   smtp: {
     smpt_user: process.env.SMTP_USER,

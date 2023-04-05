@@ -1,14 +1,16 @@
 import { Context } from "koa";
-import Jwt from "../utils/auth";
+import TemplateClassificationServer from "../servers/TemplateClassificationServer";
+import response from "../utils/response";
 
-class TemplateController {
-  getTemplateList(ctx: Context) {
-    const token = ctx.headers.authorization?.split(" ")[1];
+class CanvasController {
+  async getAllTemplateClassification(ctx: Context) {
+    const templateClassification =
+      await TemplateClassificationServer.findEveryThing();
 
-    if (token) {
-      console.log(Jwt.verify(token));
-    }
+    console.log(templateClassification);
+
+    response.success(ctx, "获取所有组件模版成功", 0, templateClassification);
   }
 }
 
-export default new TemplateController();
+export default new CanvasController();
