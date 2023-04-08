@@ -1,0 +1,256 @@
+{
+	"info": {
+		"_postman_id": "b1f64a00-24c9-4c3e-84f6-1c2cb2e803bf",
+		"name": "online_design",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "loginByEmail",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "a eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJuYW1lIjoxMjN9LCJpYXQiOjE2NzgyNjk2NzksImV4cCI6MTY4MDg2MTY3OX0.-OFHjXJIaFmILzi7zn87dSXq4yRiztAK6gDnLAnuaAI",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"chengjiang_09@163.com\",\r\n    \"code\":564894\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8001/design/login/email",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"design",
+						"login",
+						"email"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "邮箱验证码",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "au",
+						"value": "",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"chengjiang_09@163.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8001/design/login/emailCode?email=chengjiang_09@163.com",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"design",
+						"login",
+						"emailCode"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "chengjiang_09@163.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取权限路由",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo3LCJlbWFpbCI6ImNoZW5namlhbmdfMDlAMTYzLmNvbSIsInVzZXJfbmFtZSI6ImNoZW5namlhbmdfMDlAMTYzLmNvbSIsInJvbGVfaWQiOjEsImdyb3VwX2lkIjoiWzAsMV0iLCJ1cGRhdGVkX2F0IjoiMjAyMy0wMy0yOVQwMToyNzo0Ny42NzJaIiwiY3JlYXRlZF9hdCI6IjIwMjMtMDMtMjlUMDE6Mjc6NDcuNjcyWiJ9LCJpYXQiOjE2ODAwNTMyNjcsImV4cCI6MTY4MjY0NTI2N30.79RYyKGzMAZ-K67cEisfd0ZBTwg8CDdsVf3eFNmS2I8",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n                      \"xAxis\": {\r\n                        \"type\": \"category\",\r\n                        \"data\": [\"Mon\", \"Tue\", \"Wed\", \"Thu\", \"Fri\", \"Sat\", \"Sun\"]\r\n                      },\r\n                      \"yAxis\": {\r\n                        \"type\": \"value\"\r\n                      },\r\n                      \"series\": [\r\n                        {\r\n                          \"data\": [150, 230, 224, 218, 135, 147, 260],\r\n                          \"type\": \"line\"\r\n                        }\r\n                      ]\r\n                    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8001/design/routes",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"design",
+						"routes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取所有图画模版",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo3LCJlbWFpbCI6ImNoZW5namlhbmdfMDlAMTYzLmNvbSIsInVzZXJfbmFtZSI6ImNoZW5namlhbmdfMDlAMTYzLmNvbSIsInJvbGVfaWQiOjEsImdyb3VwX2lkIjoiWzAsMV0iLCJ1cGRhdGVkX2F0IjoiMjAyMy0wMy0yOVQwMToyNzo0Ny42NzJaIiwiY3JlYXRlZF9hdCI6IjIwMjMtMDMtMjlUMDE6Mjc6NDcuNjcyWiJ9LCJpYXQiOjE2ODAwNTMyNjcsImV4cCI6MTY4MjY0NTI2N30.79RYyKGzMAZ-K67cEisfd0ZBTwg8CDdsVf3eFNmS2I8",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8001/design/templateClassification",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"design",
+						"templateClassification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取画布头部导航栏选项",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo3LCJlbWFpbCI6ImNoZW5namlhbmdfMDlAMTYzLmNvbSIsInVzZXJfbmFtZSI6ImNoZW5namlhbmdfMDlAMTYzLmNvbSIsInJvbGVfaWQiOjEsImdyb3VwX2lkIjoiWzAsMV0iLCJ1cGRhdGVkX2F0IjoiMjAyMy0wMy0yOVQwMToyNzo0Ny42NzJaIiwiY3JlYXRlZF9hdCI6IjIwMjMtMDMtMjlUMDE6Mjc6NDcuNjcyWiJ9LCJpYXQiOjE2ODAwNTMyNjcsImV4cCI6MTY4MjY0NTI2N30.79RYyKGzMAZ-K67cEisfd0ZBTwg8CDdsVf3eFNmS2I8",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8001/design/canvasHeaderMenu",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"design",
+						"canvasHeaderMenu"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取模板列表",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/design/template/list",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"design",
+						"template",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "保存画布信息",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo3LCJ1c2VyX25hbWUiOiJjaGVuZ2ppYW5nXzA5QDE2My5jb20iLCJwYXNzd29yZCI6bnVsbCwiZW1haWwiOiJjaGVuZ2ppYW5nXzA5QDE2My5jb20iLCJyb2xlX2lkIjoxLCJncm91cF9pZCI6WzAsMV0sImNyZWF0ZWRfYXQiOiIyMDIzLTAzLTI5VDAxOjI3OjQ3LjAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMy0wMy0yOVQwMToyNzo0Ny4wMDBaIn0sImlhdCI6MTY4MDkyMDIxOCwiZXhwIjoxNjgzNTEyMjE4fQ.SLJbYcwzxaj2sxNJX9Wdtko4xgWkITtnj0bN6m_09kk",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\":{},\r\n    \"groupId\": [],\r\n    \"title\":\"123\",\r\n    \"context\":\"789\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8001/design/template",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"design",
+						"template"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

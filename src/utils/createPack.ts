@@ -13,7 +13,7 @@ interface Value {
 
 /**
  * 向数据库中插入数据时，对数据进行二次封装，添加一些必要字段
- * （此处可能会被sequelize默认字段覆盖）
+ * （此处sequelize默认字段覆盖,该方法未启用）
  * 
  * @param value 
  * @returns 

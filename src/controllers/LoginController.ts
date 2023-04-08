@@ -41,7 +41,7 @@ class LoginController {
           email,
           user_name: email,
           role_id: 2,
-          group_id: [0, 1],
+          group_id: null,
         } as unknown as UserCreationAttributes);
 
         if (user) {

@@ -84,7 +84,11 @@ function formatDate(time: number) {
 export function getUserDataByToken(ctx: Context) {
   const token = ctx.headers.authorization?.split(" ")[1];
 
-  const { userData } = Jwt.verify(token as string);
+  const { userData ,error } = Jwt.verify(token as string);
+
+  if(error) {
+    return null
+  }
 
   return userData?.payload;
 }

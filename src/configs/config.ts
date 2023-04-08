@@ -43,7 +43,8 @@ const config = {
       "/design/login/email",
       "/design/login/emailCode",
       "/design/canvasHeaderMenu",
-      "/design/templateClassification"
+      "/design/templateClassification",
+      "/design/template/list"
     ],
   },
   smtp: {
