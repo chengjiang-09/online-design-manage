@@ -1,16 +1,18 @@
 import { BinaryLike, createHash } from "crypto";
+import { Context } from "koa";
+import Jwt from "../utils/auth";
 
 /**
  * 随机六位数字验证码
- * 
+ *
  * @returns 六位验证码
  */
-export function getVerifyCode(): string{
-    let code = ''
-    for(let i = 0; i< 6; i++){
-        code = code.concat(Math.floor(Math.random() * 10).toString())
-    }
-    return code
+export function getVerifyCode(): string {
+  let code = "";
+  for (let i = 0; i < 6; i++) {
+    code = code.concat(Math.floor(Math.random() * 10).toString());
+  }
+  return code;
 }
 
 /**
@@ -71,4 +73,18 @@ export function getDate(): string {
 
 function formatDate(time: number) {
   return time > 9 ? time : `0${time}`;
+}
+
+/**
+ * 从token获取用户信息
+ *
+ * @param ctx
+ * @returns
+ */
+export function getUserDataByToken(ctx: Context) {
+  const token = ctx.headers.authorization?.split(" ")[1];
+
+  const { userData } = Jwt.verify(token as string);
+
+  return userData?.payload;
 }

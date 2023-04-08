@@ -3,8 +3,8 @@ import { Context } from "koa";
 function success(
   ctx: Context,
   msg: string = "请求成功",
-  code: number = 0,
-  data: any = []
+  data: any = [],
+  code: number = 1,
 ) {
     ctx.response.body = {
         code,
@@ -16,8 +16,8 @@ function success(
 function error(
     ctx: Context,
     msg: string = "请求失败",
-    code: number = 1,
-    data: any = []
+    data: any = [],
+    code: number = 0,
   ) {
       ctx.response.body = {
           code,

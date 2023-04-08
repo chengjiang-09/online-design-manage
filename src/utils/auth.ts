@@ -1,10 +1,15 @@
 import JWT, {
   JsonWebTokenError,
-  Jwt,
-  JwtPayload,
   TokenExpiredError,
 } from "jsonwebtoken";
 import config from "../configs/config";
+import { UserAttributes } from "../models/Users";
+
+interface userData {
+  payload: UserAttributes | null;
+  iat: number | string | null;
+  exp: number | string | null;
+}
 
 export function sign(data: any) {
   return JWT.sign(
@@ -19,14 +24,14 @@ export function sign(data: any) {
 }
 
 export function verify(token: string): {
-  userData: Jwt | JwtPayload | string | null;
+  userData: userData | null;
   error: TokenExpiredError | JsonWebTokenError | null;
 } {
   try {
     const userData = JWT.verify(token, config.jwt.jwt_sercret as string);
-    
+
     return {
-      userData: userData,
+      userData: userData as userData,
       error: null,
     };
   } catch (err) {

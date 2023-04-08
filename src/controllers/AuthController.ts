@@ -17,7 +17,7 @@ class AuthController {
         role.dataValues.role_weight as number
       );
 
-      response.success(ctx, "获取路由成功", 0, {
+      response.success(ctx, "获取路由成功", {
         routes,
       });
     } else {
@@ -28,7 +28,7 @@ class AuthController {
     const canvasHeaderMenu = await CanvasHeaderMenuServer.getCanvasHeaderMenu();
 
     if (canvasHeaderMenu) {
-      response.success(ctx, "获取画布头部导航选项成功", 0, canvasHeaderMenu);
+      response.success(ctx, "获取画布头部导航选项成功", canvasHeaderMenu);
     } else {
       response.error(ctx, "数据库错误");
     }

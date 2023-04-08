@@ -1,18 +1,20 @@
-import { Column, Model, Table } from "sequelize-typescript";
+import { Column, Model, Table, DataType } from "sequelize-typescript";
 import { Optional } from "sequelize";
 
-interface ChartsAttributes {
+export interface ChartsAttributes {
   id?: number;
-  name?: string;
   author_name?: string;
   author_id?: number;
   origin_author_name?: string;
   origin_author_id?: number;
   data?: string;
+  group_id?: string[];
+  title?: string;
+  context?: string;
 }
 
-interface ChartsCreationAttributes extends Optional<ChartsAttributes, 'id'>{
-    dataValues?: any
+export interface ChartsCreationAttributes extends Optional<ChartsAttributes, "id"> {
+  dataValues?: any;
 }
 
 //模板表
@@ -20,9 +22,10 @@ interface ChartsCreationAttributes extends Optional<ChartsAttributes, 'id'>{
   tableName: "charts",
   modelName: "Chart",
 })
-export default class Chart extends Model<ChartsAttributes, ChartsCreationAttributes> {
-  @Column
-  name!: string;
+export default class Chart extends Model<
+  ChartsAttributes,
+  ChartsCreationAttributes
+> {
   @Column
   author_name!: string;
   @Column
@@ -31,6 +34,16 @@ export default class Chart extends Model<ChartsAttributes, ChartsCreationAttribu
   origin_author_name!: string;
   @Column
   origin_author_id!: number;
-  @Column
+  @Column({
+    type: DataType.JSON,
+  })
   data!: string;
+  @Column({
+    type: DataType.JSON,
+  })
+  group_id?: string[];
+  @Column
+  title?: string;
+  @Column
+  context?: string;
 }

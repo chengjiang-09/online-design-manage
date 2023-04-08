@@ -1,8 +1,10 @@
 import KoaRouter from '@koa/router'
-import TemplateController from '../controllers/TemplateListController'
+import ChartController from '../controllers/ChartController'
 
 const chartRouter = new KoaRouter()
 
-chartRouter.get('/template/list', TemplateController.getTemplateList)
+chartRouter.get('/template/list', ChartController.getChartList)
+
+chartRouter.post('/template', ChartController.saveChart)
 
 export default chartRouter

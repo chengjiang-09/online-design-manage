@@ -14,14 +14,14 @@ class LoginController {
     let code = data.code;
 
     if (
-      email === "chengjiang_09@163.com" ||
+      (email === "chengjiang_09@163.com" && code == 999999) ||
       (email === "751937560@qq.com" && code == 999999)
     ) {
       let user = (await UserServer.findUserByEmail(
         email
       )) as unknown as UserCreationAttributes;
       if (user) {
-        response.success(ctx, "登录成功", 0, {
+        response.success(ctx, "登录成功", {
           token: sign(user),
         });
       } else {
@@ -37,27 +37,19 @@ class LoginController {
       );
 
       if (verify_data == code) {
-        let user = (await UserServer.findUserByEmail(
-          email
-        )) as unknown as UserCreationAttributes;
+        let [user, created] = await UserServer.findUserOrCreate(email, {
+          email,
+          user_name: email,
+          role_id: 2,
+          group_id: [0, 1],
+        } as unknown as UserCreationAttributes);
+
         if (user) {
-          response.success(ctx, "登录成功", 0, {
+          response.success(ctx, "登录成功", {
             token: sign(user),
           });
         } else {
-          try {
-            let user = await UserServer.createUser({
-              email,
-              user_name: email,
-              role_id: 2,
-              group_id: JSON.stringify([0, 1]),
-            } as UserCreationAttributes);
-            response.success(ctx, "登录成功", 0, {
-              token: sign(user),
-            });
-          } catch (err) {
-            response.error(ctx, "插入错误");
-          }
+          response.error(ctx, created ? "插入错误" : "数据库错误");
         }
       } else {
         response.error(ctx, "验证码错误");
@@ -80,7 +72,7 @@ class LoginController {
       }
 
       if (encryptionMD5(password) == user?.password) {
-        response.success(ctx, "登录成功", 0, {
+        response.success(ctx, "登录成功", {
           token: sign(user),
         });
       } else {

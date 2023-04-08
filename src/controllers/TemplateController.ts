@@ -9,7 +9,7 @@ class CanvasController {
 
     console.log(templateClassification);
 
-    response.success(ctx, "获取所有组件模版成功", 0, templateClassification);
+    response.success(ctx, "获取所有组件模版成功", templateClassification);
   }
 }
 
