@@ -1,8 +1,8 @@
-import ChartData, { ChartDataAttributes } from "../models/ChartsData"
+import ChartsData, { ChartsDataAttributes } from "../models/ChartsData"
 
 class ChartDataServer {
-    createChartData(chartData:ChartDataAttributes){
-        return ChartData.create(chartData)
+    createChartData(chartData:ChartsDataAttributes){
+        return ChartsData.create(chartData)
     }
 }
 

@@ -1,5 +1,7 @@
-import { Column, Model, Table, DataType } from "sequelize-typescript";
+import { Column, Model, Table, DataType, HasOne } from "sequelize-typescript";
 import { Optional } from "sequelize";
+import ChartsData from "./ChartsData";
+import ChartsImg from "./ChartsImg";
 
 export interface ChartsAttributes {
   created_at: Date;
@@ -13,10 +15,11 @@ export interface ChartsAttributes {
   group_id?: any[];
   title?: string;
   context?: string;
-  imgPath?:string
+  imgPath?: string;
 }
 
-export interface ChartsCreationAttributes extends Optional<ChartsAttributes, "id"> {
+export interface ChartsCreationAttributes
+  extends Optional<ChartsAttributes, "id"> {
   dataValues?: ChartsAttributes | null;
 }
 
@@ -45,6 +48,10 @@ export default class Chart extends Model<
   title?: string;
   @Column
   context?: string;
-  @Column
-  imgPath?:string
+
+  @HasOne(() => ChartsData)
+  dataValue?: ChartsData;
+
+  @HasOne(() => ChartsImg)
+  imgValue?: ChartsImg;
 }

@@ -2,6 +2,7 @@ import { Context, Next } from "koa";
 import config from "../configs/config";
 import Jwt from "../utils/auth";
 import response from "../utils/response";
+// import Path from 'path'
 
 //jwt验证中间件
 function authMiddleware(ctx: Context, next: Next) {

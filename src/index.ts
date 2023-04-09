@@ -21,6 +21,8 @@ import corsMiddleware from "./middlewares/corsMiddleware";
 
 import { swaggerUiConfig } from "./configs/swaggerConfig";
 import path from "path";
+import { uploadFileLogger, reqLogger } from "./logger";
+import { getDate } from "./utils/utils";
 
 const app = new Koa();
 
@@ -28,7 +30,7 @@ app
   .use(corsMiddleware)
   .use(koaSwagger(swaggerUiConfig))
   .use(
-    KoaStatic(path.join(path.resolve(__dirname, '..') + "/public"), {
+    KoaStatic(path.join(path.resolve(__dirname, "..") + "/public"), {
       maxAge: 60 * 60 * 1000,
       gzip: true,
     })
@@ -41,7 +43,14 @@ app
       formidable: {
         multiples: true,
         maxFieldsSize: 10 * 1024 * 1024,
-        // uploadDir
+        onFileBegin: (name, file) => {
+          uploadFileLogger.info(`时间:${getDate()} ${name} ${file.filepath}`);
+        },
+        // 保持后缀名\
+        keepExtensions: true,
+      },
+      onError(err) {
+        reqLogger.warn(err);
       },
     })
   )

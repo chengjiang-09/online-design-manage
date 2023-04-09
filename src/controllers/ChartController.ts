@@ -1,18 +1,21 @@
 import { Context } from "koa";
 import ChartServer from "../servers/ChartServer";
 import ChartDataServer from "../servers/ChartDataServer";
+import ChartImgServer from "../servers/ChartImgServer";
 import response from "../utils/response";
 import { getUserDataByToken } from "../utils/utils";
-import { ChartDataAttributes } from "../models/ChartsData";
+import { ChartsDataAttributes } from "../models/ChartsData";
 import { ChartsAttributes } from "../models/Charts";
 import { paginate } from "../utils/paginate";
+import { ChartsImgAttributes } from "../models/ChartsImg";
+import config from "../configs/config";
 
 interface ChartData {
   data: object;
   groupId: any[];
   title: string;
   context: string;
-  imgPath: string;
+  img: string;
 }
 
 interface PageData {
@@ -46,10 +49,9 @@ class ChartController {
       author_id: user?.id,
       origin_author_name: user?.user_name,
       origin_author_id: user?.id,
-      group_id: chartData.groupId,
+      group_id: [Number(chartData.groupId)],
       title: chartData.title,
       context: chartData.context,
-      imgPath: chartData.imgPath,
     };
 
     const chart = await ChartServer.createChart(createData as ChartsAttributes);
@@ -59,13 +61,24 @@ class ChartController {
       data: chartData.data,
     };
 
+    const createChartImg = {
+      chart_id: chart.dataValues.id,
+      img_path: config.assertsUrl.chartsImg,
+      name: chartData.img,
+    };
+
+    const createdChartImg = await ChartImgServer.createChartImg(
+      createChartImg as ChartsImgAttributes
+    );
+
     const createdChartData = await ChartDataServer.createChartData(
-      createChartData as ChartDataAttributes
+      createChartData as ChartsDataAttributes
     );
 
     response.success(ctx, "创建成功", {
       ...chart.dataValues,
       data: createdChartData.dataValues.data,
+      imgPath: createdChartImg.dataValues.img_path,
     });
   }
 }

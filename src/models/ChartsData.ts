@@ -1,7 +1,8 @@
-import { Table, Column, Model, DataType } from "sequelize-typescript";
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from "sequelize-typescript";
 import { Optional } from "sequelize";
+import Chart from "./Charts";
 
-export interface ChartDataAttributes {
+export interface ChartsDataAttributes {
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
@@ -10,23 +11,28 @@ export interface ChartDataAttributes {
   data?: object;
 }
 
-interface ChartDataCreationAttributes
-  extends Optional<ChartDataAttributes, "id"> {
-  dataValues: ChartDataAttributes | null;
+interface ChartsDataCreationAttributes
+  extends Optional<ChartsDataAttributes, "id"> {
+  dataValues: ChartsDataAttributes | null;
 }
 
 @Table({
   tableName: "charts_data",
   modelName: "ChartsData",
 })
-export default class ChartData extends Model<
-  ChartDataAttributes,
-  ChartDataCreationAttributes
+export default class ChartsData extends Model<
+  ChartsDataAttributes,
+  ChartsDataCreationAttributes
 > {
-  @Column
-  chart_id?: number;
   @Column({
     type: DataType.JSON,
   })
   data!: object;
+
+  @ForeignKey(() => Chart)
+  @Column
+  chart_id?: number;
+
+  @BelongsTo(() => Chart)
+  Chart?: Chart;
 }

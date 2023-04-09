@@ -24,6 +24,7 @@ const config = {
       db: { type: "file", filename: "logs/db.log" },
       redis: { type: "file", filename: "logs/redisDb.log" },
       smtp: { type: "file", filename: "logs/smtp.log" },
+      uploadFile: { type: "file", filename: "logs/uploadFile.log" },
       finalInfo: { type: "file", filename: "logs/finalInfo.log" },
     },
     categories: {
@@ -31,6 +32,7 @@ const config = {
       db: { appenders: ["db"], level: "info" },
       redis: { appenders: ["redis"], level: "info" },
       smtp: { appenders: ["smtp"], level: "info" },
+      uploadFile: { appenders: ["uploadFile"], level: "info" },
       finalInfo: { appenders: ["finalInfo"], level: "info" },
     },
   },
@@ -44,7 +46,7 @@ const config = {
       "/design/login/emailCode",
       "/design/canvasHeaderMenu",
       "/design/templateClassification",
-      "/design/template/list"
+      "/design/template/list",
     ],
   },
   smtp: {
@@ -54,6 +56,9 @@ const config = {
   regExp: {
     email: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
   },
+  assertsUrl: {
+    chartsImg: "/charts"
+  }
 };
 
 export default config;
