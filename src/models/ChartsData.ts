@@ -9,6 +9,7 @@ export interface ChartsDataAttributes {
   id?: number;
   chart_id?: number;
   data?: object;
+  base_data?: object
 }
 
 interface ChartsDataCreationAttributes
@@ -28,6 +29,11 @@ export default class ChartsData extends Model<
     type: DataType.JSON,
   })
   data!: object;
+  
+  @Column({
+    type: DataType.JSON,
+  })
+  base_data?: object
 
   @ForeignKey(() => Chart)
   @Column

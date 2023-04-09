@@ -47,6 +47,10 @@ class LoginController {
         if (user) {
           response.success(ctx, "登录成功", {
             token: sign(user),
+            user: {
+              id: user.id,
+              email: user.email,
+            },
           });
         } else {
           response.error(ctx, created ? "插入错误" : "数据库错误");
@@ -74,6 +78,10 @@ class LoginController {
       if (encryptionMD5(password) == user?.password) {
         response.success(ctx, "登录成功", {
           token: sign(user),
+          user: {
+            id: user.id,
+            email: user.email,
+          },
         });
       } else {
         return response.error(ctx, "账户或密码错误", 2001);

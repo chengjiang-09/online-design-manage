@@ -47,6 +47,7 @@ const config = {
       "/design/canvasHeaderMenu",
       "/design/templateClassification",
       "/design/template/list",
+      "/design/template GET"
     ],
   },
   smtp: {

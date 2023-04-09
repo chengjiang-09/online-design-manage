@@ -12,6 +12,7 @@ import config from "../configs/config";
 
 interface ChartData {
   data: object;
+  baseData: object
   groupId: any[];
   title: string;
   context: string;
@@ -59,6 +60,7 @@ class ChartController {
     const createChartData = {
       chart_id: chart.dataValues.id,
       data: chartData.data,
+      base_data: chartData.baseData
     };
 
     const createChartImg = {
@@ -78,8 +80,32 @@ class ChartController {
     response.success(ctx, "创建成功", {
       ...chart.dataValues,
       data: createdChartData.dataValues.data,
+      baseData: createdChartData.dataValues.base_data,
       imgPath: createdChartImg.dataValues.img_path,
     });
+  }
+  async getChartById(ctx: Context) {
+    const { id } = ctx.request.query;
+
+    if (id && !Array.isArray(id) && !isNaN(id as unknown as number)) {
+      const chart = await ChartServer.getChartById(id);
+
+      if (chart) {
+        const chartImg = await ChartImgServer.findChartImgByChartId(id);
+        const chartData = await ChartDataServer.findChartDataByChartId(id);
+
+        if (chartImg && chartData) {
+          response.success(ctx, "查找成功", {
+            ...chart.dataValues,
+            data: chartData.dataValues.data,
+            baseData: chartData.dataValues.base_data,
+            imgPath: chartImg.dataValues.img_path,
+          });
+        }
+      } else {
+        response.error(ctx, "无此内容", {}, 404);
+      }
+    }
   }
 }
 

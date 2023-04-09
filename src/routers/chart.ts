@@ -7,4 +7,6 @@ chartRouter.get('/template/list', ChartController.getChartList)
 
 chartRouter.post('/template', ChartController.saveChart)
 
+chartRouter.get('/template', ChartController.getChartById)
+
 export default chartRouter

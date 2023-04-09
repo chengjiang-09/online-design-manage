@@ -88,6 +88,13 @@ class ChartServer {
   createChart(chartsData: ChartsAttributes) {
     return Chart.create(chartsData);
   }
+  getChartById(id: number | string) {
+    return Chart.findOne({
+      where: {
+        id,
+      },
+    });
+  }
 }
 
 export default new ChartServer();

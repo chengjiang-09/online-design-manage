@@ -7,8 +7,9 @@ import response from "../utils/response";
 //jwt验证中间件
 function authMiddleware(ctx: Context, next: Next) {
   const path = ctx.path;
+  
   //校验jwt白名单
-  if (!config.jwt.jwt_unless.includes(path)) {
+  if (!config.jwt.jwt_unless.includes(path) && !config.jwt.jwt_unless.includes(`${path} ${ctx.method}`)) {
     const token = ctx.headers.authorization?.split(" ")[1];
 
     if (token !== undefined && token !== "") {
@@ -20,7 +21,7 @@ function authMiddleware(ctx: Context, next: Next) {
         return next();
       }
     } else {
-      return response.error(ctx, "token 为空", 4001);
+      return response.error(ctx, "未登录", 4001);
     }
   }
 
