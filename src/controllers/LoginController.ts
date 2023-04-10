@@ -23,6 +23,10 @@ class LoginController {
       if (user) {
         response.success(ctx, "登录成功", {
           token: sign(user),
+          user: {
+            id: user.dataValues.id,
+            email: user.dataValues.email,
+          },
         });
       } else {
         response.error(ctx, "数据库错误");
@@ -48,8 +52,8 @@ class LoginController {
           response.success(ctx, "登录成功", {
             token: sign(user),
             user: {
-              id: user.id,
-              email: user.email,
+              id: user.dataValues.id,
+              email: user.dataValues.email,
             },
           });
         } else {
@@ -79,8 +83,8 @@ class LoginController {
         response.success(ctx, "登录成功", {
           token: sign(user),
           user: {
-            id: user.id,
-            email: user.email,
+            id: user.dataValues.id,
+            email: user.dataValues.email,
           },
         });
       } else {

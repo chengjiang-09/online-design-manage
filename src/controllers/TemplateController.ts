@@ -7,8 +7,6 @@ class CanvasController {
     const templateClassification =
       await TemplateClassificationServer.findEveryThing();
 
-    console.log(templateClassification);
-
     response.success(ctx, "获取所有组件模版成功", templateClassification);
   }
 }
