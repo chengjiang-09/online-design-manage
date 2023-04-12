@@ -108,6 +108,13 @@ class ChartController {
           } as ChartsDataAttributes,
           chartData.id as number | string
         );
+
+        await ChartImgServer.updateChartImg(
+          {
+            name: chartData.img,
+          } as ChartsImgAttributes,
+          chartData.id as number | string
+        );
       }
 
       const chartRsp = await ChartServer.getChartById(

@@ -96,7 +96,7 @@ class ChartServer {
     });
   }
   updateChart(chartsData: ChartsAttributes, id: string | number) {
-    return Chart.update(chartsData, { where: { id }, returning: true  });
+    return Chart.update(chartsData, { where: { id } });
   }
 }
 

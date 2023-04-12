@@ -32,18 +32,20 @@ class UploadController {
   }
   async updateImg(ctx: Context) {
     const file = ctx.request.files?.file;
+    const { originName } = ctx.request.body
 
     try {
       if (!Array.isArray(file) && file) {
         const reader = fs.createReadStream(file.filepath);
 
         const filePath = `/charts/${file.originalFilename}`;
-
+        const unlickPath = `/charts/${originName}`
+        
         await new Promise((resolve) => {
           fs.unlink(
             path.join(
               path.resolve(path.resolve(__dirname, ".."), "..") + "/public"
-            ) + filePath,
+            ) + unlickPath,
             (err) => {
               if (err) {
                 uploadFileLogger.warn(err);
