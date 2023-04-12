@@ -5,4 +5,6 @@ const uploadRouter = new KoaRouter()
 
 uploadRouter.post("/chartImg", UploadController.uploadImg)
 
+uploadRouter.put("/chartImg", UploadController.updateImg)
+
 export default uploadRouter

@@ -11,6 +11,12 @@ class ChartDataServer {
       },
     });
   }
+  updateChartData(chartData: ChartsDataAttributes, id: string | number) {
+    return ChartsData.update(chartData, {
+      where: { chart_id: id },
+      returning: true,
+    });
+  }
 }
 
 export default new ChartDataServer();

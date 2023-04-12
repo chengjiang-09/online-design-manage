@@ -11,8 +11,10 @@ import { ChartsImgAttributes } from "../models/ChartsImg";
 import config from "../configs/config";
 
 interface ChartData {
+  id?: string | number;
+  authorId?: string | number;
   data: object;
-  baseData: object
+  baseData: object;
   groupId: any[];
   title: string;
   context: string;
@@ -60,7 +62,7 @@ class ChartController {
     const createChartData = {
       chart_id: chart.dataValues.id,
       data: chartData.data,
-      base_data: chartData.baseData
+      base_data: chartData.baseData,
     };
 
     const createChartImg = {
@@ -84,6 +86,59 @@ class ChartController {
       imgPath: createdChartImg.dataValues.img_path,
     });
   }
+  async updateChart(ctx: Context) {
+    const user = getUserDataByToken(ctx);
+    const chartData = ctx.request.body as ChartData;
+
+    try {
+      if (user?.id == chartData.authorId) {
+        await ChartServer.updateChart(
+          {
+            title: chartData.title,
+            context: chartData.context,
+            group_id: [Number(chartData.groupId)],
+          } as ChartsAttributes,
+          chartData.id as number | string
+        );
+
+        await ChartDataServer.updateChartData(
+          {
+            data: chartData.data,
+            base_data: chartData.baseData,
+          } as ChartsDataAttributes,
+          chartData.id as number | string
+        );
+      }
+
+      const chartRsp = await ChartServer.getChartById(
+        chartData.id as number | string
+      );
+
+      if (chartRsp) {
+        const chartImgRsp = await ChartImgServer.findChartImgByChartId(
+          chartData.id as number | string
+        );
+        const chartDataRsp = await ChartDataServer.findChartDataByChartId(
+          chartData.id as number | string
+        );
+
+        if (chartImgRsp && chartDataRsp) {
+          response.success(ctx, "更新画布成功", {
+            ...chartRsp.dataValues,
+            data: chartDataRsp.dataValues.data,
+            baseData: chartDataRsp.dataValues.base_data,
+            imgName: chartImgRsp.dataValues.name,
+          });
+        }
+      } else {
+        response.error(ctx, "更新画布失败", {}, 404);
+      }
+    } catch (e) {
+      console.log(e);
+
+      response.error(ctx, "更新画布失败", {}, 404);
+    }
+  }
   async getChartById(ctx: Context) {
     const { id } = ctx.request.query;
 
@@ -99,7 +154,7 @@ class ChartController {
             ...chart.dataValues,
             data: chartData.dataValues.data,
             baseData: chartData.dataValues.base_data,
-            imgPath: chartImg.dataValues.img_path,
+            imgName: chartImg.dataValues.name,
           });
         }
       } else {
