@@ -3,7 +3,7 @@ import ChartServer from "../servers/ChartServer";
 import ChartDataServer from "../servers/ChartDataServer";
 import ChartImgServer from "../servers/ChartImgServer";
 import response from "../utils/response";
-import { getUserDataByToken } from "../utils/utils";
+import { getNowTimeInChina, getUserDataByToken } from "../utils/utils";
 import { ChartsDataAttributes } from "../models/ChartsData";
 import { ChartsAttributes } from "../models/Charts";
 import { paginate } from "../utils/paginate";
@@ -92,27 +92,31 @@ class ChartController {
 
     try {
       if (user?.id == chartData.authorId) {
+        const updateAt = getNowTimeInChina()
         await ChartServer.updateChart(
           {
+            updated_at: updateAt,
             title: chartData.title,
             context: chartData.context,
             group_id: [Number(chartData.groupId)],
-          } as ChartsAttributes,
+          } as unknown as ChartsAttributes,
           chartData.id as number | string
         );
 
         await ChartDataServer.updateChartData(
           {
+            updated_at: updateAt,
             data: chartData.data,
             base_data: chartData.baseData,
-          } as ChartsDataAttributes,
+          } as unknown as ChartsDataAttributes,
           chartData.id as number | string
         );
 
         await ChartImgServer.updateChartImg(
           {
+            updated_at: updateAt,
             name: chartData.img,
-          } as ChartsImgAttributes,
+          } as unknown as ChartsImgAttributes,
           chartData.id as number | string
         );
       }

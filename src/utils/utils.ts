@@ -84,11 +84,25 @@ function formatDate(time: number) {
 export function getUserDataByToken(ctx: Context) {
   const token = ctx.headers.authorization?.split(" ")[1];
 
-  const { userData ,error } = Jwt.verify(token as string);
+  const { userData, error } = Jwt.verify(token as string);
 
-  if(error) {
-    return null
+  if (error) {
+    return null;
   }
 
   return userData?.payload;
+}
+
+/**
+ * 获取北京时间（UTC + 8小时）
+ * 
+ * @returns 
+ */
+export function getNowTimeInChina(): string {
+  const timestamp = new Date().getTime() + 8 * 60 * 60 * 1000; // 获取当前时间戳并加上8个小时的毫秒数
+  const datetime = new Date(timestamp)
+    .toISOString()
+    .slice(0, 19)
+    .replace("T", " "); // 转换为 MySQL datetime 格式
+  return datetime;
 }
