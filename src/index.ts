@@ -15,9 +15,10 @@ import { koaSwagger } from "koa2-swagger-ui";
 import KoaStatic from "koa-static";
 
 import reqLoggerMiddleware from "./middlewares/reqLoggerMiddleware";
-// import finalInfoMiddleware from "./middlewares/finalInfoMiddleware";
+import finalInfoMiddleware from "./middlewares/finalInfoMiddleware";
 import authMiddleware from "./middlewares/authMiddleware";
 import corsMiddleware from "./middlewares/corsMiddleware";
+import loginLoggerMiddleware from "./middlewares/loginLoggerMiddleware";
 
 import { swaggerUiConfig } from "./configs/swaggerConfig";
 import path from "path";
@@ -61,9 +62,10 @@ app
     })
   )
   .use(authMiddleware)
+  .use(loginLoggerMiddleware)
   .use(reqLoggerMiddleware)
-  // .use(finalInfoMiddleware)
-  .use(router.routes());
+  .use(router.routes())
+  .use(finalInfoMiddleware);
 
 function run(port: any) {
   return app.listen(port, () => {

@@ -3,7 +3,7 @@ import response from "../utils/response";
 import UserServer from "../servers/UserServer";
 import { sign } from "../utils/auth";
 import config from "../configs/config";
-import { redisGet } from "../db/redis";
+import { redisGet, redisSet } from "../db/redis";
 import { encryptionMD5, verifyRegularByRE } from "../utils/utils";
 import { UserCreationAttributes } from "../models/Users";
 class LoginController {
@@ -21,8 +21,14 @@ class LoginController {
         email
       )) as unknown as UserCreationAttributes;
       if (user) {
+        const token = sign(user);
+        await redisSet(
+          `${config.redis.redis_verify_token.key}${email}`,
+          token,
+          config.redis.redis_verify_token.expire
+        );
         response.success(ctx, "登录成功", {
-          token: sign(user),
+          token,
           user: {
             id: user.dataValues.id,
             email: user.dataValues.email,
@@ -49,8 +55,14 @@ class LoginController {
         } as unknown as UserCreationAttributes);
 
         if (user) {
+          const token = sign(user);
+          await redisSet(
+            `${config.redis.redis_verify_token.key}${email}`,
+            token,
+            config.redis.redis_verify_token.expire
+          );
           response.success(ctx, "登录成功", {
-            token: sign(user),
+            token,
             user: {
               id: user.dataValues.id,
               email: user.dataValues.email,
@@ -80,8 +92,14 @@ class LoginController {
       }
 
       if (encryptionMD5(password) == user?.password) {
+        const token = sign(user);
+        await redisSet(
+          `${config.redis.redis_verify_token.key}${email}`,
+          token,
+          config.redis.redis_verify_token.expire
+        );
         response.success(ctx, "登录成功", {
-          token: sign(user),
+          token,
           user: {
             id: user.dataValues.id,
             email: user.dataValues.email,

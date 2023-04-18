@@ -2,10 +2,10 @@ import { Context, Next } from "koa";
 import config from "../configs/config";
 import Jwt from "../utils/auth";
 import response from "../utils/response";
-// import Path from 'path'
+import { redisGet } from '../db/redis'
 
 //jwt验证中间件
-function authMiddleware(ctx: Context, next: Next) {
+async function authMiddleware(ctx: Context, next: Next) {
   const path = ctx.path;
   
   //校验jwt白名单
@@ -13,9 +13,11 @@ function authMiddleware(ctx: Context, next: Next) {
     const token = ctx.headers.authorization?.split(" ")[1];
 
     if (token !== undefined && token !== "") {
-      const { error, userData } = Jwt.verify(token as string);
-      if (error !== null) {
-        return response.error(ctx, "token 验证失败", 4000);
+      let { error, userData } = Jwt.verify(token as string);
+
+        const verifyResult = await redisGet(`${config.redis.redis_verify_token.key}${userData?.payload?.email}`)        
+      if (error !== null && !verifyResult) {
+        return response.error(ctx, "token 验证失败或token已过期", 4000);
       } else {
         ctx.userData = userData
         return next();

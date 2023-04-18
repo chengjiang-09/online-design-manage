@@ -17,6 +17,10 @@ const config = {
       key: "online_design_login_",
       expire: 300,
     },
+    redis_verify_token : {
+      key: "online_design_token_",
+      expire: 60 * 60 * 12,
+    },
   },
   log: {
     appenders: {
