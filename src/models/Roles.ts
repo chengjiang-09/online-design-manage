@@ -1,5 +1,6 @@
-import { Model, Table, Column } from "sequelize-typescript";
+import { Model, Table, Column, HasMany } from "sequelize-typescript";
 import { Optional } from "sequelize";
+import Users from "./Users";
 
 interface RolesAttributes {
   id?: number;
@@ -20,4 +21,7 @@ export default class Role extends Model<RolesAttributes, RolesCreationAttributes
   role_weight!: number;
   @Column
   role_name!: string;
+
+  @HasMany(() => Users)
+  users?:Users
 }

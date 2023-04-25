@@ -1,4 +1,3 @@
-// import { Sequelize, Op } from "sequelize";
 import TemplateClassification from "../models/TemplateClassification";
 import Component from "../models/Components";
 import ComponentsDefaults from "../models/ComponentsDefaults";

@@ -1,5 +1,6 @@
-import { Column, Model, Table, DataType } from "sequelize-typescript";
+import { Column, Model, Table, DataType, ForeignKey, BelongsTo } from "sequelize-typescript";
 import { Optional } from "sequelize";
+import Role from './Roles'
 
 export interface UserAttributes {
   created_at: Date;
@@ -39,13 +40,18 @@ export default class User extends Model<
   })
   email!: string;
   @Column({
-    type: DataType.INTEGER,
-    comment: "权限id",
-  })
-  role_id!: number;
-  @Column({
     type: DataType.JSON,
     comment: "组id,为了方便不同组,这里使用json数组,数组中存放不同组的id",
   })
   group_id!: string[];
+
+  @ForeignKey(() => Role)
+  @Column({
+    type: DataType.INTEGER,
+    comment: "权限id",
+  })
+  role_id!: number;
+
+  @BelongsTo(() => Role)
+  role?:Role
 }

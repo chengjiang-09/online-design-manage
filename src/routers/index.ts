@@ -5,6 +5,7 @@ import swaggerRouter from './swagger'
 import canvasRouter from './canvas'
 import authRouter from './auth'
 import uploadRouter from './upload'
+import systemManageRouter from './systemManage'
 
 const router = new KoaRouter({
     prefix: '/design'
@@ -16,5 +17,6 @@ router.use(chartRouter.routes())
 router.use(canvasRouter.routes())
 router.use(authRouter.routes())
 router.use(uploadRouter.routes())
+router.use(systemManageRouter.routes())
 
 export default router

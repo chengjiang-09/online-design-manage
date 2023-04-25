@@ -5,7 +5,7 @@ import { sign } from "../utils/auth";
 import config from "../configs/config";
 import { redisGet, redisSet } from "../db/redis";
 import { encryptionMD5, verifyRegularByRE } from "../utils/utils";
-import { UserCreationAttributes } from "../models/Users";
+import { UserAttributes } from "../models/Users";
 class LoginController {
   async loginByEmail(ctx: Context) {
     const data = ctx.request.body;
@@ -17,9 +17,7 @@ class LoginController {
       (email === "chengjiang_09@163.com" && code == 999999) ||
       (email === "751937560@qq.com" && code == 999999)
     ) {
-      let user = (await UserServer.findUserByEmail(
-        email
-      )) as unknown as UserCreationAttributes;
+      let user = await UserServer.findUserByEmail(email);
       if (user) {
         const token = sign(user);
         await redisSet(
@@ -31,6 +29,7 @@ class LoginController {
           token,
           user: {
             id: user.dataValues.id,
+            username: user.dataValues.user_name,
             email: user.dataValues.email,
           },
         });
@@ -52,7 +51,7 @@ class LoginController {
           user_name: email,
           role_id: 2,
           group_id: null,
-        } as unknown as UserCreationAttributes);
+        } as unknown as UserAttributes);
 
         if (user) {
           const token = sign(user);
@@ -65,6 +64,7 @@ class LoginController {
             token,
             user: {
               id: user.dataValues.id,
+              username: user.dataValues.user_name,
               email: user.dataValues.email,
             },
           });
@@ -102,6 +102,7 @@ class LoginController {
           token,
           user: {
             id: user.dataValues.id,
+            username: user.dataValues.user_name,
             email: user.dataValues.email,
           },
         });

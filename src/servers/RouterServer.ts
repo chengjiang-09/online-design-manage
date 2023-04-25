@@ -12,6 +12,12 @@ class RouterServer {
       where: { permission_weight: { [Op.lt]: role_weight } },
     });
   }
+  getRouteAll(page: number = 1, limit: number = 9){
+    return Router.findAndCountAll({
+      limit: limit,
+      offset: (page - 1) * limit,
+    })
+  }
 }
 
 export default new RouterServer();
