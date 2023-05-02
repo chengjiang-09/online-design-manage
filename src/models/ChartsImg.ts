@@ -11,11 +11,11 @@ import Chart from "./Charts";
 export interface ChartsImgAttributes {
   created_at: Date;
   updated_at: Date;
-  deleted_at: Date;
+  deleted_at: Date | null;
   id?: number;
   chart_id?: number;
   img_path?: string;
-  name?:string
+  name?: string;
 }
 
 interface ChartsImgCreationAttributes
@@ -26,6 +26,8 @@ interface ChartsImgCreationAttributes
 @Table({
   tableName: "charts_img",
   modelName: "ChartsImg",
+  paranoid: true,
+  deletedAt: "deleted_at",
 })
 export default class ChartsImg extends Model<
   ChartsImgAttributes,
@@ -35,7 +37,7 @@ export default class ChartsImg extends Model<
   img_path?: string;
 
   @Column
-  name?:string
+  name?: string;
 
   @ForeignKey(() => Chart)
   @Column

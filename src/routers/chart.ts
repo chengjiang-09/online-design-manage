@@ -11,4 +11,6 @@ chartRouter.put('/template', ChartController.updateChart)
 
 chartRouter.get('/template', ChartController.getChartById)
 
+chartRouter.delete('/template', ChartController.deleteChart)
+
 export default chartRouter

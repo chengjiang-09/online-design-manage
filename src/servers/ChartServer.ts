@@ -23,6 +23,7 @@ class ChartServer {
           ),
           {
             author_id: userId,
+            deleted_at: null,
           },
           Sequelize.fn(
             "JSON_CONTAINS",
@@ -68,6 +69,7 @@ class ChartServer {
           // ),
           {
             author_id: userId,
+            deleted_at: null,
           },
           Sequelize.fn(
             "JSON_CONTAINS",
@@ -95,7 +97,7 @@ class ChartServer {
       },
     });
   }
-  updateChart(chartsData: ChartsAttributes, id: string | number) {
+  updateChart(chartsData: ChartsAttributes, id: string | number) {    
     return Chart.update(chartsData, { where: { id } });
   }
 }

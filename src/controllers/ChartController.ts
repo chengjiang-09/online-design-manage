@@ -92,7 +92,7 @@ class ChartController {
 
     try {
       if (user?.id == chartData.authorId) {
-        const updateAt = getNowTimeInChina()
+        const updateAt = getNowTimeInChina();
         await ChartServer.updateChart(
           {
             updated_at: updateAt,
@@ -171,6 +171,61 @@ class ChartController {
       } else {
         response.error(ctx, "无此内容", {}, 404);
       }
+    }
+  }
+  async deleteChart(ctx: Context) {
+    const user = getUserDataByToken(ctx);
+    const chartData = ctx.request.query as unknown as ChartData;
+
+    try {
+      if (chartData.authorId == user?.id) {
+        const chart = await ChartServer.getChartById(
+          chartData.id as number | string
+        );
+
+        if (chart) {
+          const deleteAt = getNowTimeInChina();
+
+          await ChartServer.updateChart(
+            {
+              deleted_at: deleteAt,
+            } as unknown as ChartsAttributes,
+            chartData.id as number | string
+          );
+
+          await ChartDataServer.updateChartData(
+            {
+              deleted_at: deleteAt,
+            } as unknown as ChartsDataAttributes,
+            chartData.id as number | string
+          );
+
+          await ChartImgServer.updateChartImg(
+            {
+              deleted_at: deleteAt,
+            } as unknown as ChartsImgAttributes,
+            chartData.id as number | string
+          );
+
+          const chartRsp = await ChartServer.getChartById(
+            chartData.id as number | string
+          );
+
+          if (chartRsp) {
+            response.error(ctx, "删除失败", {
+              ...chartRsp?.dataValues,
+            });
+          } else {
+            response.success(ctx, "删除画布成功", {});
+          }
+        } else {
+          response.error(ctx, "无此画布信息", {}, 404);
+        }
+      }
+    } catch (e) {
+      console.log(e);
+
+      response.error(ctx, "删除画布模板失败", {}, 404);
     }
   }
 }

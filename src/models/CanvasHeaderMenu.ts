@@ -4,7 +4,7 @@ import { Optional } from 'sequelize'
 interface CanvasHeaderMenuAttributes {
     created_at: Date;
     updated_at: Date;
-    deleted_at: Date;
+    deleted_at: Date | null;
     id?: number;
     name?: string
     type?: string

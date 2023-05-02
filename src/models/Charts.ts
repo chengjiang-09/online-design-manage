@@ -6,7 +6,7 @@ import ChartsImg from "./ChartsImg";
 export interface ChartsAttributes {
   created_at: Date;
   updated_at: Date;
-  deleted_at: Date;
+  deleted_at: Date | null;
   id?: number;
   author_name?: string;
   author_id?: number;
@@ -27,6 +27,8 @@ export interface ChartsCreationAttributes
 @Table({
   tableName: "charts",
   modelName: "Chart",
+  paranoid: true,
+  deletedAt: "deleted_at",
 })
 export default class Chart extends Model<
   ChartsAttributes,
