@@ -2,7 +2,7 @@ import { Model, Column, Table, HasMany } from "sequelize-typescript";
 import Component from "./Components";
 import { Optional } from "sequelize";
 
-interface TemplateClassificationAttributes {
+export interface TemplateClassificationAttributes {
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
@@ -11,7 +11,7 @@ interface TemplateClassificationAttributes {
   type?: string;
   icon?: string;
   component?: string;
-  components: Component[]
+  components: Component[];
 }
 
 interface TemplateClassificationCreationAttributes
@@ -38,5 +38,4 @@ export default class TemplateClassification extends Model<
 
   @HasMany(() => Component)
   items?: Component[];
-  
 }

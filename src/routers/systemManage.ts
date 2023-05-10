@@ -12,4 +12,6 @@ systemManageRouter.put("/users", SystemManageController.updateUser)
 
 systemManageRouter.get("/routes",SystemManageController.getAllRoutes)
 
+systemManageRouter.put("/template", SystemManageController.updateTemplate)
+
 export default systemManageRouter

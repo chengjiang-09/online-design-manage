@@ -8,7 +8,7 @@ import {
 import { Optional } from "sequelize";
 import ComponentsDefaultsConfiguresChartValue from "./ComponentsDefaultsConfiguresChartValue";
 
-interface ComponentsDefaultsConfiguresChartValueDetailsAttributes {
+export interface ComponentsDefaultsConfiguresChartValueDetailsAttributes {
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;

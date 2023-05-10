@@ -10,7 +10,7 @@ import { Optional } from "sequelize";
 import Component from "./Components";
 import ComponentsDefaultsConfigures from "./ComponentsDefaultsConfigures";
 
-interface ComponentsDefaultsAttributes {
+export interface ComponentsDefaultsAttributes {
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;

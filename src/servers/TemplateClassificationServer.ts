@@ -1,4 +1,6 @@
-import TemplateClassification from "../models/TemplateClassification";
+import TemplateClassification, {
+  TemplateClassificationAttributes,
+} from "../models/TemplateClassification";
 import Component from "../models/Components";
 import ComponentsDefaults from "../models/ComponentsDefaults";
 import ComponentsDefaultsConfigures from "../models/ComponentsDefaultsConfigures";
@@ -6,6 +8,13 @@ import ComponentsDefaultsConfiguresChartValue from "../models/ComponentsDefaults
 import ComponentsDefaultsConfiguresLayout from "../models/ComponentsDefaultsConfiguresLayout";
 import ComponentsDefaultsConfiguresChartValueDetails from "../models/ComponentsDefaultsConfiguresChartValueDetails";
 class TemplateClassificationServer {
+  bulkCreateOrUpdateTemplate(template: Array<TemplateClassificationAttributes>) {
+    return TemplateClassification.bulkCreate(template, {
+      updateOnDuplicate: Object.keys(
+        {}
+      ) as (keyof TemplateClassificationAttributes)[],
+    });
+  }
   findAllTemplate() {
     return TemplateClassification.findAll();
   }

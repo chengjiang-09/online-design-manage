@@ -16,6 +16,72 @@ interface UpdateUser {
   username: string;
 }
 
+interface TemplateData {
+  icon: string,
+  component: string,
+  label: string,
+  type: string,
+  id: number | string | null,
+}
+
+interface ComponentData {
+  component: any,
+  label: any,
+  type: any,
+  imgPath: any,
+  icon: any,
+  id: number | string | null,
+  template_id: number | string | null,
+}
+
+interface DefaultData {
+  icon: any,
+  component: any,
+  label: any,
+  type: any,
+  id: number | string | null,
+  components_id: number | string | null,
+}
+
+interface ConfigureData {
+  component: any,
+  label: any,
+  type: any,
+  value: any,
+  disabled: any,
+  jsonData: any,
+  values: Array<ChartData>,
+  default: Array<any>,
+  id: number | string | null,
+}
+
+interface ChartDataDetail {
+  id: number | string | null,
+  label: any,
+  type: any,
+  value: any,
+  component: any,
+  jsonData: Array<string>,
+  value_id: any
+}
+
+interface ChartData {
+  id: number | string | null,
+  label: any,
+  type: any,
+  component: any,
+  value: any,
+  configures_id: number | string | null,
+  values: Array<ChartDataDetail>
+}
+
+interface Template {
+  template: Array<TemplateData>,
+  component: Array<ComponentData>,
+  default: Array<DefaultData>,
+  configure: Array<ConfigureData>,
+}
+
 class SystemManageController {
   async getAllUsers(ctx: Context) {
     const pageData = ctx.request.query as unknown as PageData;
@@ -67,6 +133,14 @@ class SystemManageController {
       const paginateData = paginate(rows, pageData.page, count, pageData.limit);
       response.success(ctx, "获取路由列表成功", paginateData);
     }
+  }
+  updateTemplate(ctx:Context) {
+    const template = ctx.request.body as Template
+
+    console.log(template);
+
+    response.success(ctx, '修改成功')
+    
   }
 }
 

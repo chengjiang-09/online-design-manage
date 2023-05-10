@@ -10,7 +10,7 @@ import TemplateClassification from "./TemplateClassification";
 import { Optional } from "sequelize";
 import ComponentsDefaults from "./ComponentsDefaults";
 
-interface ComponentAttributes {
+export interface ComponentAttributes {
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;

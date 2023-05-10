@@ -27,6 +27,8 @@ class EmailCodeController {
             code,
             config.redis.redis_verify_login.expire
           );
+        }).catch(() => {
+          response.error(ctx, 'error')
         });
       } catch (err) {
         response.error(ctx, 'error')

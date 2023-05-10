@@ -11,7 +11,7 @@ import ComponentsDefaults from "./ComponentsDefaults";
 import ComponentsDefaultsConfiguresChartValue from "./ComponentsDefaultsConfiguresChartValue";
 import ComponentsDefaultsConfiguresLayout from "./ComponentsDefaultsConfiguresLayout";
 
-interface ComponentsDefaultsConfiguresAttributes {
+export interface ComponentsDefaultsConfiguresAttributes {
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;

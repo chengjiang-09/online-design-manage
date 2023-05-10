@@ -10,7 +10,7 @@ import { Optional } from "sequelize";
 import ComponentsDefaultsConfigures from "./ComponentsDefaultsConfigures";
 import ComponentsDefaultsConfiguresChartValueDetails from "./ComponentsDefaultsConfiguresChartValueDetails";
 
-interface ComponentsDefaultsConfiguresChartValueAttributes {
+export interface ComponentsDefaultsConfiguresChartValueAttributes {
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
