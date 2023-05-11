@@ -11,7 +11,7 @@ class TemplateClassificationServer {
   bulkCreateOrUpdateTemplate(template: Array<TemplateClassificationAttributes>) {
     return TemplateClassification.bulkCreate(template, {
       updateOnDuplicate: Object.keys(
-        {}
+        template[0]
       ) as (keyof TemplateClassificationAttributes)[],
     });
   }

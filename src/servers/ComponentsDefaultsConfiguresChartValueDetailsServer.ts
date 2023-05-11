@@ -26,7 +26,7 @@ class ComponentsDefaultsConfiguresChartValueDetailsServer {
       componentsDefaultsConfiguresChartValueDetails,
       {
         updateOnDuplicate: Object.keys(
-          {}
+          componentsDefaultsConfiguresChartValueDetails[0]
         ) as (keyof ComponentsDefaultsConfiguresChartValueDetailsAttributes)[],
       }
     );

@@ -7,7 +7,9 @@ class ComponentsServer {
   }
   bulkCreateOrUpdateComponent(component: Array<ComponentAttributes>) {
     return Component.bulkCreate(component, {
-      updateOnDuplicate: Object.keys({}) as (keyof ComponentAttributes)[],
+      updateOnDuplicate: Object.keys(
+        component[0]
+      ) as (keyof ComponentAttributes)[],
     });
   }
 }

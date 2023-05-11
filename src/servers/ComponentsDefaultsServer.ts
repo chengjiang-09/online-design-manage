@@ -17,7 +17,7 @@ class ComponentsDefaultsServer {
   ) {
     return ComponentsDefaults.bulkCreate(componentsDefaults, {
       updateOnDuplicate: Object.keys(
-        {}
+        componentsDefaults[0]
       ) as (keyof ComponentsDefaultsAttributes)[],
     });
   }

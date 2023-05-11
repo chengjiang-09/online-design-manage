@@ -22,7 +22,7 @@ class ComponentsDefaultsConfiguresServer {
       componentsDefaultsConfigures,
       {
         updateOnDuplicate: Object.keys(
-          {}
+          componentsDefaultsConfigures[0]
         ) as (keyof ComponentsDefaultsConfiguresAttributes)[],
       }
     );

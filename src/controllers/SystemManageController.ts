@@ -5,6 +5,18 @@ import RouterServer from "../servers/RouterServer";
 import { paginate } from "../utils/paginate";
 import { getNowTimeInChina } from "../utils/utils";
 import { UserAttributes } from "../models/Users";
+import TemplateClassificationServer from "../servers/TemplateClassificationServer";
+import { TemplateClassificationAttributes } from "../models/TemplateClassification";
+import { ComponentAttributes } from "../models/Components";
+import { ComponentsDefaultsAttributes } from "../models/ComponentsDefaults";
+import { ComponentsDefaultsConfiguresAttributes } from "../models/ComponentsDefaultsConfigures";
+import ComponentsServer from "../servers/ComponentsServer";
+import { ComponentsDefaultsConfiguresChartValueAttributes } from "../models/ComponentsDefaultsConfiguresChartValue";
+import { ComponentsDefaultsConfiguresChartValueDetailsAttributes } from "../models/ComponentsDefaultsConfiguresChartValueDetails";
+import ComponentsDefaultsServer from "../servers/ComponentsDefaultsServer";
+import ComponentsDefaultsConfiguresServer from "../servers/ComponentsDefaultsConfiguresServer";
+import ComponentsDefaultsConfiguresChartValueServer from "../servers/ComponentsDefaultsConfiguresChartValueServer";
+import ComponentsDefaultsConfiguresChartValueDetailsServer from "../servers/ComponentsDefaultsConfiguresChartValueDetailsServer";
 
 interface PageData {
   limit: number;
@@ -16,70 +28,22 @@ interface UpdateUser {
   username: string;
 }
 
-interface TemplateData {
-  icon: string,
-  component: string,
-  label: string,
-  type: string,
-  id: number | string | null,
+interface ComponentsDefaultsConfigures
+  extends ComponentsDefaultsConfiguresAttributes {
+  values: Array<ComponentsDefaultsConfiguresChartValue>;
+  default: Array<any>;
 }
 
-interface ComponentData {
-  component: any,
-  label: any,
-  type: any,
-  imgPath: any,
-  icon: any,
-  id: number | string | null,
-  template_id: number | string | null,
-}
-
-interface DefaultData {
-  icon: any,
-  component: any,
-  label: any,
-  type: any,
-  id: number | string | null,
-  components_id: number | string | null,
-}
-
-interface ConfigureData {
-  component: any,
-  label: any,
-  type: any,
-  value: any,
-  disabled: any,
-  jsonData: any,
-  values: Array<ChartData>,
-  default: Array<any>,
-  id: number | string | null,
-}
-
-interface ChartDataDetail {
-  id: number | string | null,
-  label: any,
-  type: any,
-  value: any,
-  component: any,
-  jsonData: Array<string>,
-  value_id: any
-}
-
-interface ChartData {
-  id: number | string | null,
-  label: any,
-  type: any,
-  component: any,
-  value: any,
-  configures_id: number | string | null,
-  values: Array<ChartDataDetail>
+interface ComponentsDefaultsConfiguresChartValue
+  extends ComponentsDefaultsConfiguresChartValueAttributes {
+  values: Array<ComponentsDefaultsConfiguresChartValueDetailsAttributes>;
 }
 
 interface Template {
-  template: Array<TemplateData>,
-  component: Array<ComponentData>,
-  default: Array<DefaultData>,
-  configure: Array<ConfigureData>,
+  template: Array<TemplateClassificationAttributes>;
+  component: Array<ComponentAttributes>;
+  default: Array<ComponentsDefaultsAttributes>;
+  configure: Array<ComponentsDefaultsConfigures>;
 }
 
 class SystemManageController {
@@ -98,7 +62,7 @@ class SystemManageController {
   }
   async updateUser(ctx: Context) {
     const newData = ctx.request.body as UpdateUser;
-    
+
     if (newData && newData.id && newData.username) {
       try {
         const updateAt = getNowTimeInChina();
@@ -112,7 +76,7 @@ class SystemManageController {
 
         const User = await UserServer.findUserById(newData.id);
         console.log(User);
-        
+
         response.success(ctx, "更新用户名成功", User);
       } catch (e) {
         console.log(e);
@@ -134,13 +98,77 @@ class SystemManageController {
       response.success(ctx, "获取路由列表成功", paginateData);
     }
   }
-  updateTemplate(ctx:Context) {
-    const template = ctx.request.body as Template
+  async updateTemplate(ctx: Context) {
+    const template = ctx.request.body as Template;
 
-    console.log(template);
+    try {
+      const updateAt = getNowTimeInChina();
 
-    response.success(ctx, '修改成功')
-    
+      if (template.template.length > 0) {
+        template.template.forEach((_templateData, index) => {
+          template.template[index].updated_at = updateAt as unknown as Date;
+        });
+
+        await TemplateClassificationServer.bulkCreateOrUpdateTemplate(
+          template.template
+        );
+      }
+
+      if (template.component.length > 0) {
+        template.component.forEach((_component, index) => {
+          template.component[index].updated_at = updateAt as unknown as Date;
+        });
+
+        await ComponentsServer.bulkCreateOrUpdateComponent(template.component);
+      }
+
+      if (template.default.length > 0) {
+        template.default.forEach((_default, index) => {
+          template.default[index].updated_at = updateAt as unknown as Date;
+        });
+
+        await ComponentsDefaultsServer.bulkCreateOrUpdateComponentDefault(
+          template.default
+        );
+      }
+
+      if (template.configure.length > 0) {
+        let chartValue: ComponentsDefaultsConfiguresChartValue[] = [];
+        let chartValueDetail: ComponentsDefaultsConfiguresChartValueDetailsAttributes[] =
+          [];
+        template.configure.forEach((configure, index) => {
+          template.configure[index].updated_at = updateAt as unknown as Date;
+          template.configure[index].jsonData = JSON.stringify(template.configure[index].jsonData)
+          configure.values.forEach((value) => {
+            value.updated_at = updateAt as unknown as Date
+            chartValue.push(value)
+            value.values.forEach(data => {
+              data.updated_at = updateAt as unknown as Date
+              data.jsonData = JSON.stringify(data.jsonData)
+              chartValueDetail.push(data)
+            })
+          });
+        });
+        
+        await ComponentsDefaultsConfiguresServer.bulkCreateOrUpdateComponentsDefaultsConfigures(
+          template.configure
+        );
+
+        await ComponentsDefaultsConfiguresChartValueServer.bulkCreateOrUpdateComponentsDefaultsConfiguresChartValue(
+          chartValue
+        );
+
+        await ComponentsDefaultsConfiguresChartValueDetailsServer.bulkCreateOrUpdateComponentsDefaultsConfiguresChartValueDetails(
+          chartValueDetail
+        );
+      }
+
+      response.success(ctx, "更新成功");
+    } catch (e) {
+      console.log(e);
+
+      response.error(ctx, "更新失败", {}, 404);
+    }
   }
 }
 
