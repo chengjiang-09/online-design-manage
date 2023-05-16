@@ -20,6 +20,7 @@ export interface ComponentsDefaultsConfiguresChartValueAttributes {
   type?: string;
   component?: string;
   value?: string;
+  jsonData?: string;
 }
 
 interface ComponentsDefaultsConfiguresChartValueCreationAttributes
@@ -43,6 +44,8 @@ export default class ComponentsDefaultsConfiguresChartValue extends Model<
   component?: string;
   @Column
   value?: string;
+  @Column
+  jsonData?: string;
 
   @ForeignKey(() => ComponentsDefaultsConfigures)
   @Column

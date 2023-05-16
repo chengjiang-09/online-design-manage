@@ -141,6 +141,7 @@ class SystemManageController {
           template.configure[index].jsonData = JSON.stringify(template.configure[index].jsonData)
           configure.values.forEach((value) => {
             value.updated_at = updateAt as unknown as Date
+            value.jsonData = JSON.stringify(value.jsonData)
             chartValue.push(value)
             value.values.forEach(data => {
               data.updated_at = updateAt as unknown as Date
@@ -154,20 +155,24 @@ class SystemManageController {
           template.configure
         );
 
-        await ComponentsDefaultsConfiguresChartValueServer.bulkCreateOrUpdateComponentsDefaultsConfiguresChartValue(
-          chartValue
-        );
-
-        await ComponentsDefaultsConfiguresChartValueDetailsServer.bulkCreateOrUpdateComponentsDefaultsConfiguresChartValueDetails(
-          chartValueDetail
-        );
+        if(chartValue.length > 0){
+          await ComponentsDefaultsConfiguresChartValueServer.bulkCreateOrUpdateComponentsDefaultsConfiguresChartValue(
+            chartValue
+          );
+        }
+        
+        if(chartValueDetail.length > 0){
+          await ComponentsDefaultsConfiguresChartValueDetailsServer.bulkCreateOrUpdateComponentsDefaultsConfiguresChartValueDetails(
+            chartValueDetail
+          );
+        }
       }
 
       response.success(ctx, "更新成功");
     } catch (e) {
       console.log(e);
 
-      response.error(ctx, "更新失败", {}, 404);
+      response.error(ctx, "更新失败", {});
     }
   }
 }
